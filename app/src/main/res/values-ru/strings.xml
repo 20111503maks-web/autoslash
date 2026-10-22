@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_tagline">Автопролистывание коротких видео</string>
+
+    <string name="accessibility_service_label">AutoSlash автопрокрутка</string>
+    <string name="accessibility_service_description">Перелистывает видео в TikTok или YouTube Shorts, пока идёт запущенная вами сессия. Работает только внутри этих приложений, узнаёт лишь, какое приложение открыто, и никогда не читает пароли, сообщения или данные аккаунта.</string>
+
+    <string name="choose_platform">Выберите платформу</string>
+    <string name="platform_installed">Установлено</string>
+    <string name="platform_not_installed">Не установлено</string>
+    <string name="section_settings">Сессия</string>
+
+    <string name="setting_session_duration">Длительность сессии</string>
+    <string name="setting_swipe_interval">Интервал свайпа</string>
+    <string name="setting_swipe_interval_hint">Каждое видео смотрится случайное время в этом диапазоне</string>
+    <string name="setting_advanced">Дополнительно</string>
+    <string name="setting_action_pause">Пауза между действиями</string>
+    <string name="setting_max_videos">Максимум видео</string>
+    <string name="value_minutes">%d мин</string>
+    <string name="value_seconds_range">%1$d–%2$d с</string>
+    <string name="value_seconds_decimal">%.1f с</string>
+
+    <string name="hint_youtube_shorts">YouTube откроется в ленте Shorts. Если откроется другая вкладка, нажмите Shorts сами: свайпы начнутся только когда Shorts на экране.</string>
+    <string name="hint_waiting_for_shorts">Откройте вкладку Shorts в YouTube. Если свайпы не начались, нажмите «Я в Shorts» на плавающей панели.</string>
+
+    <string name="action_start_session">НАЧАТЬ СЕССИЮ</string>
+    <string name="action_stop">СТОП</string>
+    <string name="action_new_session">НОВАЯ СЕССИЯ</string>
+    <string name="action_open_platform">Открыть %s</string>
+    <string name="action_enable">Включить</string>
+    <string name="action_open_settings">Открыть настройки</string>
+    <string name="action_cancel">Отмена</string>
+
+    <string name="label_platform">Платформа</string>
+    <string name="label_session_time">Время сессии</string>
+    <string name="label_of_left">из %1$s · осталось %2$s</string>
+    <string name="label_videos_viewed">Просмотрено видео</string>
+    <string name="label_videos_left">из %1$d · осталось %2$d</string>
+    <string name="label_this_video">Это видео</string>
+    <string name="label_random_watch">случайное время</string>
+
+    <string name="status_idle">Ожидание</string>
+    <string name="status_waiting_app">Ждём приложение</string>
+    <string name="status_waiting_feed">Ждём Shorts</string>
+    <string name="status_watching">Просмотр</string>
+    <string name="status_swiping">Свайп</string>
+    <string name="status_paused">Пауза · вне приложения</string>
+    <string name="status_finished">Завершено</string>
+    <string name="status_stopped">Остановлено</string>
+
+    <string name="finish_time">Достигнут лимит времени.</string>
+    <string name="finish_videos">Достигнут лимит видео.</string>
+    <string name="finish_user">Остановлено вами.</string>
+    <string name="finish_service">Остановлено: служба специальных возможностей выключена.</string>
+
+    <string name="banner_accessibility_title">Служба выключена</string>
+    <string name="banner_accessibility_text">Включите «AutoSlash автопрокрутка», чтобы приложение могло листать видео.</string>
+    <string name="dialog_accessibility_title">Включите службу</string>
+    <string name="dialog_accessibility_text">Откройте Настройки → Специальные возможности → Установленные приложения → AutoSlash автопрокрутка и включите её. Затем вернитесь и нажмите «Начать сессию».</string>
+
+    <string name="toast_not_installed">%s не установлен</string>
+    <string name="toast_tiktok_opened">TikTok открыт. Автопрокрутка работает в ленте; СТОП на плавающей панели остановит её в любой момент.</string>
+    <string name="toast_youtube_shorts_opened">Открываем YouTube Shorts… Если открылась другая вкладка, нажмите Shorts. Свайпы начнутся, когда Shorts на экране.</string>
+    <string name="toast_youtube_go_to_shorts">YouTube открыт. Нажмите вкладку Shorts: свайпы начнутся, когда Shorts на экране.</string>
+
+    <string name="overlay_stats">%1$s · видео: %2$d · %3$s</string>
+    <string name="overlay_stop">■ СТОП</string>
+    <string name="overlay_confirm_shorts">Я в Shorts ▶</string>
+
+    <string name="privacy_note">Работает локально. Пароли, cookies и токены не читаются.</string>
+</resources>

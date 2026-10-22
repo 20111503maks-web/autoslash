@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">AutoSlash</string>
+    <string name="app_tagline">Hands-free scrolling for short videos</string>
+
+    <string name="accessibility_service_label">AutoSlash auto-scroll</string>
+    <string name="accessibility_service_description">Swipes to the next video in TikTok or YouTube Shorts while a session you started is running. Works only inside those apps, reads only which app is open, and never reads passwords, messages or account data.</string>
+
+    <string name="choose_platform">Choose platform</string>
+    <string name="platform_installed">Installed</string>
+    <string name="platform_not_installed">Not installed</string>
+    <string name="section_settings">Session</string>
+
+    <string name="setting_session_duration">Session duration</string>
+    <string name="setting_swipe_interval">Swipe interval</string>
+    <string name="setting_swipe_interval_hint">Each video is watched for a random time in this range</string>
+    <string name="setting_advanced">Advanced</string>
+    <string name="setting_action_pause">Pause between actions</string>
+    <string name="setting_max_videos">Max videos</string>
+    <string name="value_minutes">%d min</string>
+    <string name="value_seconds_range">%1$d–%2$d s</string>
+    <string name="value_seconds_decimal">%.1f s</string>
+
+    <string name="hint_youtube_shorts">YouTube will open on the Shorts feed. If it lands on another tab, tap Shorts yourself: swiping starts only once Shorts is on screen.</string>
+    <string name="hint_waiting_for_shorts">Open the Shorts tab in YouTube. If swiping does not start, tap “I’m in Shorts” on the floating panel.</string>
+
+    <string name="action_start_session">START SESSION</string>
+    <string name="action_stop">STOP</string>
+    <string name="action_new_session">NEW SESSION</string>
+    <string name="action_open_platform">Open %s</string>
+    <string name="action_enable">Enable</string>
+    <string name="action_open_settings">Open settings</string>
+    <string name="action_cancel">Cancel</string>
+
+    <string name="label_platform">Platform</string>
+    <string name="label_session_time">Session time</string>
+    <string name="label_of_left">of %1$s · %2$s left</string>
+    <string name="label_videos_viewed">Videos viewed</string>
+    <string name="label_videos_left">of %1$d · %2$d left</string>
+    <string name="label_this_video">This video</string>
+    <string name="label_random_watch">random watch time</string>
+
+    <string name="status_idle">Idle</string>
+    <string name="status_waiting_app">Waiting for app</string>
+    <string name="status_waiting_feed">Waiting for Shorts</string>
+    <string name="status_watching">Watching</string>
+    <string name="status_swiping">Swiping</string>
+    <string name="status_paused">Paused · left app</string>
+    <string name="status_finished">Finished</string>
+    <string name="status_stopped">Stopped</string>
+
+    <string name="finish_time">Session time limit reached.</string>
+    <string name="finish_videos">Video limit reached.</string>
+    <string name="finish_user">Stopped by you.</string>
+    <string name="finish_service">Stopped: the accessibility service was turned off.</string>
+
+    <string name="banner_accessibility_title">Accessibility service is off</string>
+    <string name="banner_accessibility_text">Turn on “AutoSlash auto-scroll” so the app can swipe for you.</string>
+    <string name="dialog_accessibility_title">Enable the service</string>
+    <string name="dialog_accessibility_text">Open Settings → Accessibility → Installed apps → AutoSlash auto-scroll and turn it on. Then come back and press START.</string>
+
+    <string name="toast_not_installed">%s is not installed</string>
+    <string name="toast_tiktok_opened">TikTok opened. Auto-scroll runs on the video feed; tap STOP on the floating panel anytime.</string>
+    <string name="toast_youtube_shorts_opened">Opening YouTube Shorts… If another tab shows up, tap Shorts. Swiping starts once Shorts is visible.</string>
+    <string name="toast_youtube_go_to_shorts">YouTube opened. Please tap the Shorts tab; swiping starts once Shorts is visible.</string>
+
+    <string name="overlay_stats">%1$s · %2$d videos · %3$s</string>
+    <string name="overlay_stop">■ STOP</string>
+    <string name="overlay_confirm_shorts">I’m in Shorts ▶</string>
+
+    <string name="privacy_note">Runs locally. No passwords, cookies or tokens are read.</string>
+</resources>
