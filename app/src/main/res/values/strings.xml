@@ -69,4 +69,12 @@
     <string name="overlay_confirm_shorts">I’m in Shorts ▶</string>
 
     <string name="privacy_note">Runs locally. No passwords, cookies or tokens are read.</string>
+    <string name="status_paused_by_user">Paused</string>
+    <string name="overlay_like">♥ %d</string>
+    <string name="overlay_pause">❚❚ Pause</string>
+    <string name="overlay_resume">▶ Resume</string>
+    <string name="action_pause">PAUSE</string>
+    <string name="action_resume">RESUME</string>
+    <string name="label_likes">Likes</string>
+    <string name="label_likes_hint">tap ♥ on the panel</string>
 </resources>

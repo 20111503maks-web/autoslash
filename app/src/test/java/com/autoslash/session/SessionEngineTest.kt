@@ -166,6 +166,59 @@ class SessionEngineTest {
     }
 
     @Test
+    fun pauseStopsSwipesAndFreezesSessionClock() = runTest {
+        val (engine, env) = newEngine()
+        engine.start(Platform.TIKTOK, settings.copy(sessionDurationMinutes = 1))
+        advanceTimeBy(20_000)
+        engine.pause()
+        val count = env.swipeTimes.size
+        val elapsedAtPause = engine.state.value.elapsedMillis
+
+        advanceTimeBy(120_000)
+        assertEquals(count, env.swipeTimes.size)
+        assertEquals(SessionStatus.PAUSED_BY_USER, engine.state.value.status)
+        assertTrue(engine.state.value.elapsedMillis - elapsedAtPause < 500)
+        assertTrue(engine.isRunning)
+
+        // Paused time does not count: the one-minute session continues after resuming.
+        engine.resume()
+        advanceTimeBy(15_000)
+        assertTrue(env.swipeTimes.size > count)
+        assertTrue(engine.state.value.isActive)
+        advanceTimeBy(60_000)
+        assertEquals(FinishReason.TIME_LIMIT, engine.state.value.finishReason)
+    }
+
+    @Test
+    fun stopWhilePausedEndsSession() = runTest {
+        val (engine, env) = newEngine()
+        engine.start(Platform.YOUTUBE_SHORTS, settings)
+        advanceTimeBy(10_000)
+        engine.pause()
+        engine.stop()
+        engine.resume()
+        val count = env.swipeTimes.size
+        advanceTimeBy(60_000)
+        assertEquals(count, env.swipeTimes.size)
+        assertEquals(SessionStatus.STOPPED, engine.state.value.status)
+        assertFalse(engine.isPaused)
+    }
+
+    @Test
+    fun likesAreCountedOnlyDuringSession() = runTest {
+        val (engine, _) = newEngine()
+        engine.recordLike()
+        assertEquals(0, engine.state.value.likes)
+        engine.start(Platform.TIKTOK, settings)
+        engine.recordLike()
+        engine.recordLike()
+        assertEquals(2, engine.state.value.likes)
+        engine.stop()
+        engine.recordLike()
+        assertEquals(2, engine.state.value.likes)
+    }
+
+    @Test
     fun cannotStartTwice() = runTest {
         val (engine, _) = newEngine()
         assertTrue(engine.start(Platform.TIKTOK, settings))

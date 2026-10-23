@@ -12,6 +12,8 @@ enum class SessionStatus {
     SWIPING,
     /** User left the target app; no gestures are dispatched until they return. */
     PAUSED_OUTSIDE_APP,
+    /** User pressed Pause: stays on the current video, session clock stopped. */
+    PAUSED_BY_USER,
     FINISHED,
     STOPPED;
 
@@ -26,6 +28,8 @@ data class SessionState(
     val elapsedMillis: Long = 0,
     val durationMillis: Long = 0,
     val videosViewed: Int = 0,
+    /** Likes the user gave with the ❤ button on the floating panel. */
+    val likes: Int = 0,
     val maxVideos: Int = 0,
     /** How long the current video will be watched before swiping, for UI display. */
     val currentWatchMillis: Long = 0,

@@ -28,6 +28,9 @@ class FloatingStopOverlay(
     private val context: AccessibilityService,
     private val onStop: () -> Unit,
     private val onConfirmFeed: () -> Unit,
+    /** Returns true when the like gesture was dispatched. */
+    private val onLike: () -> Boolean,
+    private val onTogglePause: () -> Unit,
 ) {
     private val windowManager: WindowManager = requireNotNull(context.getSystemService(WindowManager::class.java))
     private val density = context.resources.displayMetrics.density
@@ -36,6 +39,8 @@ class FloatingStopOverlay(
     private lateinit var title: TextView
     private lateinit var stats: TextView
     private lateinit var confirmButton: TextView
+    private lateinit var likeButton: TextView
+    private lateinit var pauseButton: TextView
 
     private val params = WindowManager.LayoutParams(
         WindowManager.LayoutParams.WRAP_CONTENT,
@@ -73,6 +78,10 @@ class FloatingStopOverlay(
             context.getString(state.status.labelRes()),
         )
         (dot.background as GradientDrawable).setColor(statusColor(state.status))
+        likeButton.text = context.getString(R.string.overlay_like, state.likes)
+        pauseButton.text = context.getString(
+            if (state.status == SessionStatus.PAUSED_BY_USER) R.string.overlay_resume else R.string.overlay_pause,
+        )
         confirmButton.visibility = if (state.status == SessionStatus.WAITING_FOR_FEED) View.VISIBLE else View.GONE
     }
 
@@ -112,6 +121,20 @@ class FloatingStopOverlay(
                 visibility = View.GONE
             }
         }
+        likeButton = pillButton(context.getString(R.string.overlay_like, 0), LIKE_PINK).apply {
+            setOnClickListener { view -> if (onLike()) pop(view) else nudge(view) }
+        }
+        pauseButton = pillButton(context.getString(R.string.overlay_pause), PAUSE_GREY).apply {
+            setOnClickListener { onTogglePause() }
+        }
+        val actions = LinearLayout(context).apply {
+            orientation = LinearLayout.HORIZONTAL
+            addView(likeButton, LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f))
+            addView(
+                pauseButton,
+                LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f).apply { marginStart = dp(8) },
+            )
+        }
         val panel = LinearLayout(context).apply {
             orientation = LinearLayout.VERTICAL
             setPadding(dp(12), dp(10), dp(12), dp(12))
@@ -124,6 +147,7 @@ class FloatingStopOverlay(
             elevation = dp(8).toFloat()
             addView(header)
             addView(confirmButton, buttonParams())
+            addView(actions, buttonParams())
             addView(stopButton, buttonParams())
         }
         panel.setOnTouchListener(DragListener())
@@ -142,6 +166,22 @@ class FloatingStopOverlay(
             setColor(color)
         }
         isClickable = true
+    }
+
+    /** Heart "pop" when the like went through. */
+    private fun pop(view: View) {
+        view.animate().scaleX(1.15f).scaleY(1.15f).setDuration(110).withEndAction {
+            view.animate().scaleX(1f).scaleY(1f).setDuration(140).start()
+        }.start()
+    }
+
+    /** Small shake when liking is not possible right now (not in the feed, mid-swipe). */
+    private fun nudge(view: View) {
+        view.animate().translationX(dp(6).toFloat()).setDuration(50).withEndAction {
+            view.animate().translationX(-dp(6).toFloat()).setDuration(80).withEndAction {
+                view.animate().translationX(0f).setDuration(50).start()
+            }.start()
+        }.start()
     }
 
     private fun buttonParams() = LinearLayout.LayoutParams(
@@ -185,12 +225,14 @@ class FloatingStopOverlay(
     companion object {
         private const val STOP_RED = 0xFFE53950.toInt()
         private const val CONFIRM_BLUE = 0xFF3D5AFE.toInt()
+        private const val LIKE_PINK = 0xFFFE2C55.toInt()
+        private const val PAUSE_GREY = 0xFF34344A.toInt()
 
         private fun statusColor(status: SessionStatus): Int = when (status) {
             SessionStatus.WATCHING -> 0xFF2EE59D.toInt()
             SessionStatus.SWIPING -> 0xFF25F4EE.toInt()
             SessionStatus.WAITING_FOR_APP, SessionStatus.WAITING_FOR_FEED -> 0xFFFFC542.toInt()
-            SessionStatus.PAUSED_OUTSIDE_APP -> 0xFFFF8A3D.toInt()
+            SessionStatus.PAUSED_OUTSIDE_APP, SessionStatus.PAUSED_BY_USER -> 0xFFFF8A3D.toInt()
             else -> 0xFF9E9EAE.toInt()
         }
     }

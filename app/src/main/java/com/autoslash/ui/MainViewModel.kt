@@ -97,6 +97,8 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
 
     fun stopSession() = SessionManager.stop()
 
+    fun togglePause() = SessionManager.togglePause()
+
     fun dismissResult() = SessionManager.reset()
 
     fun reopenApp() {

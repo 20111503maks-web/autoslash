@@ -13,6 +13,7 @@ import com.autoslash.session.SessionEngine
 import com.autoslash.session.SessionEnvironment
 import com.autoslash.session.SessionManager
 import com.autoslash.session.SessionState
+import com.autoslash.session.SessionStatus
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -46,6 +47,8 @@ class AutoScrollService : AccessibilityService(), SessionEnvironment {
             context = this,
             onStop = { SessionManager.stop() },
             onConfirmFeed = { feedConfirmedManually = true },
+            onLike = ::likeCurrentVideo,
+            onTogglePause = { SessionManager.togglePause() },
         )
         SessionManager.attach(sessionEngine)
         scope.launch {
@@ -85,6 +88,28 @@ class AutoScrollService : AccessibilityService(), SessionEnvironment {
         engine = null
         overlay?.hide()
         overlay = null
+    }
+
+    /**
+     * Likes the video on screen when the user taps ❤ on the floating panel.
+     * Only during an active session, with the session's app in front and not mid-swipe.
+     */
+    private fun likeCurrentVideo(): Boolean {
+        val sessionEngine = engine ?: return false
+        val state = sessionEngine.state.value
+        val platform = state.platform ?: return false
+        if (!sessionEngine.isRunning || state.status == SessionStatus.SWIPING) return false
+        val screen = checkScreen(platform)
+        val inFeed = screen == ScreenCheck.IN_FEED ||
+            (screen == ScreenCheck.IN_APP && !platform.requiresFeedConfirmation)
+        if (!inFeed) return false
+
+        val metrics = resources.displayMetrics
+        val gesture = SwipeGestureFactory.doubleTapLike(metrics.widthPixels, metrics.heightPixels)
+        val callback = object : GestureResultCallback() {
+            override fun onCompleted(gestureDescription: GestureDescription?) = sessionEngine.recordLike()
+        }
+        return dispatchGesture(gesture, callback, null)
     }
 
     // --- SessionEnvironment ---

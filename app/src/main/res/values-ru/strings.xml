@@ -68,4 +68,12 @@
     <string name="overlay_confirm_shorts">Я в Shorts ▶</string>
 
     <string name="privacy_note">Работает локально. Пароли, cookies и токены не читаются.</string>
+    <string name="status_paused_by_user">Пауза</string>
+    <string name="overlay_like">♥ %d</string>
+    <string name="overlay_pause">❚❚ Пауза</string>
+    <string name="overlay_resume">▶ Дальше</string>
+    <string name="action_pause">ПАУЗА</string>
+    <string name="action_resume">ПРОДОЛЖИТЬ</string>
+    <string name="label_likes">Лайки</string>
+    <string name="label_likes_hint">кнопка ♥ на панели</string>
 </resources>

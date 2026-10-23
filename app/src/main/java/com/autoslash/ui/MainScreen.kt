@@ -24,6 +24,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Accessibility
 import androidx.compose.material.icons.rounded.Info
+import androidx.compose.material.icons.rounded.Pause
 import androidx.compose.material.icons.rounded.PlayArrow
 import androidx.compose.material.icons.rounded.Refresh
 import androidx.compose.material.icons.rounded.Stop
@@ -106,6 +107,7 @@ fun MainScreen(viewModel: MainViewModel) {
                     SessionContent(
                         state = session,
                         onStop = viewModel::stopSession,
+                        onTogglePause = viewModel::togglePause,
                         onReopen = viewModel::reopenApp,
                         onDone = viewModel::dismissResult,
                     )
@@ -206,6 +208,7 @@ private fun SetupContent(
 private fun SessionContent(
     state: SessionState,
     onStop: () -> Unit,
+    onTogglePause: () -> Unit,
     onReopen: () -> Unit,
     onDone: () -> Unit,
 ) {
@@ -217,14 +220,31 @@ private fun SessionContent(
         }
         Spacer(Modifier.height(24.dp))
         if (state.isActive) {
-            OutlinedButton(
-                onClick = onReopen,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(52.dp),
-                shape = RoundedCornerShape(18.dp),
-            ) {
-                Text(stringResource(R.string.action_open_platform, (state.platform ?: Platform.DEFAULT).displayName))
+            val paused = state.status == SessionStatus.PAUSED_BY_USER
+            Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+                OutlinedButton(
+                    onClick = onTogglePause,
+                    modifier = Modifier
+                        .weight(1f)
+                        .height(52.dp),
+                    shape = RoundedCornerShape(18.dp),
+                ) {
+                    Icon(if (paused) Icons.Rounded.PlayArrow else Icons.Rounded.Pause, contentDescription = null)
+                    Spacer(Modifier.size(6.dp))
+                    Text(stringResource(if (paused) R.string.action_resume else R.string.action_pause))
+                }
+                OutlinedButton(
+                    onClick = onReopen,
+                    modifier = Modifier
+                        .weight(1f)
+                        .height(52.dp),
+                    shape = RoundedCornerShape(18.dp),
+                ) {
+                    Text(
+                        stringResource(R.string.action_open_platform, (state.platform ?: Platform.DEFAULT).displayName),
+                        maxLines = 1,
+                    )
+                }
             }
             Spacer(Modifier.height(12.dp))
             GradientButton(

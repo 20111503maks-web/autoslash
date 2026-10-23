@@ -14,6 +14,7 @@ fun SessionStatus.labelRes(): Int = when (this) {
     SessionStatus.WATCHING -> R.string.status_watching
     SessionStatus.SWIPING -> R.string.status_swiping
     SessionStatus.PAUSED_OUTSIDE_APP -> R.string.status_paused
+    SessionStatus.PAUSED_BY_USER -> R.string.status_paused_by_user
     SessionStatus.FINISHED -> R.string.status_finished
     SessionStatus.STOPPED -> R.string.status_stopped
 }

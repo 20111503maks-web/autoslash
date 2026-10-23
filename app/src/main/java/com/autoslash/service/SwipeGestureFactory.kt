@@ -30,5 +30,22 @@ object SwipeGestureFactory {
             .build()
     }
 
+    /**
+     * Double tap in the middle of the video: the standard "like" gesture in both TikTok and
+     * YouTube Shorts. It only ever adds a like (it never removes one).
+     */
+    fun doubleTapLike(screenWidth: Int, screenHeight: Int, random: Random = Random.Default): GestureDescription {
+        val x = (screenWidth * random.between(0.42, 0.58)).toFloat()
+        val y = (screenHeight * random.between(0.40, 0.50)).toFloat()
+        val tap = Path().apply { moveTo(x, y) }
+        val gap = random.nextLong(110, 151)
+        return GestureDescription.Builder()
+            .addStroke(GestureDescription.StrokeDescription(tap, 0, TAP_MS))
+            .addStroke(GestureDescription.StrokeDescription(tap, TAP_MS + gap, TAP_MS))
+            .build()
+    }
+
+    private const val TAP_MS = 40L
+
     private fun Random.between(from: Double, until: Double) = from + nextDouble() * (until - from)
 }

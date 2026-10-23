@@ -55,6 +55,10 @@ object SessionManager {
         engine.value?.stop(FinishReason.USER_STOP)
     }
 
+    fun togglePause() {
+        engine.value?.togglePause()
+    }
+
     fun reset() {
         engine.value?.reset()
         lastState.value = SessionState()

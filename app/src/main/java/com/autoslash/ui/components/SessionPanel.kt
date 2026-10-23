@@ -45,7 +45,7 @@ fun SessionStatus.color(): Color = when (this) {
     SessionStatus.WATCHING -> AppColors.Success
     SessionStatus.SWIPING -> AppColors.TikTokCyan
     SessionStatus.WAITING_FOR_APP, SessionStatus.WAITING_FOR_FEED -> AppColors.Warning
-    SessionStatus.PAUSED_OUTSIDE_APP -> AppColors.Paused
+    SessionStatus.PAUSED_OUTSIDE_APP, SessionStatus.PAUSED_BY_USER -> AppColors.Paused
     else -> AppColors.TextSecondary
 }
 
@@ -100,6 +100,12 @@ fun SessionPanel(state: SessionState, modifier: Modifier = Modifier) {
                 label = stringResource(R.string.label_this_video),
                 value = if (state.currentWatchMillis > 0) "${state.currentWatchMillis / 1000}s" else "—",
                 sub = stringResource(R.string.label_random_watch),
+                modifier = Modifier.weight(1f),
+            )
+            Stat(
+                label = stringResource(R.string.label_likes),
+                value = state.likes.toString(),
+                sub = stringResource(R.string.label_likes_hint),
                 modifier = Modifier.weight(1f),
             )
         }
